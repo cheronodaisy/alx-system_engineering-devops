@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#configures a new Ubuntu machine nginx
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install nginx -y
+cat <<'EOL' | sudo tee /etc/nginx/conf.d/custom_response_header.conf
+server_tokens off;
+
+location / {
+    add_header X-Served-By $hostname;
+}
+EOL
+sudo nginx -t
+sudo systemctl reload nginx
+sudo systemctl enable nginx
+echo "Nginx has been configured with a custom HTTP response header (X-Served-By) on this server."
