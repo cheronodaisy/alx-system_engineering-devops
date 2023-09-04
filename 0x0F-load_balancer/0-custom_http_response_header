@@ -14,4 +14,5 @@ EOL
 sudo nginx -t
 sudo systemctl reload nginx
 sudo systemctl enable nginx
+sudo systemctl start nginx
 echo "Nginx has been configured with a custom HTTP response header (X-Served-By) on this server."
