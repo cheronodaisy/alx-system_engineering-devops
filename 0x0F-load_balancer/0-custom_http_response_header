@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 # Installs Nginx with the following configurations:
-#+    Listens on port 80.
-#+    Returns a page containing "Hello World" when queried
-#+     at the root with a curl GET request.
-#+    Configures /redirect_me as a "301 Moved Permanently".
-#+    Includes a custom 404 page containing "Ceci n'est pas une page".
-#+    Contains a custom HTTP header named X-Served-By.
-#+    The value of the HTTP header is the hostname of the running server.
+# - Listens on port 80.
+# - Returns a page containing "Hello World" when queried
+#   at the root with a curl GET request.
+# - Configures /redirect_me as a "301 Moved Permanently".
+# - Includes a custom 404 page containing "Ceci n'est pas une page".
+# - Contains a custom HTTP header named X-Served-By.
+# - The value of the HTTP header is the hostname of the running server.
+
+# Ignore SC2154 for shellcheck
+# shellcheck disable=SC2154
 
 apt-get update
 apt-get install -y nginx
@@ -17,10 +20,11 @@ echo "Hello World" > /var/www/html/index.html
 touch /var/www/html/404.html
 echo "Ceci n'est pas une page" > /var/www/html/404.html
 
+# Use double quotes around the string with variables to ensure proper expansion
 printf %s "server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    add_header X-Served-By $HOSTNAME;
+    add_header X-Served-By \$HOSTNAME;
     root   /var/www/html;
     index  index.html index.htm;
 
@@ -36,3 +40,4 @@ printf %s "server {
 }" > /etc/nginx/sites-available/default
 
 service nginx restart
+
