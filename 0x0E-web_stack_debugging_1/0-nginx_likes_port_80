@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#Configures an Nginx server to listen on port 80.
+
+DEFAULT_CONFIG="/etc/nginx/sites-available/default"
+ENABLED_CONFIG="/etc/nginx/sites-enabled/default"
+
+#Check if the default enabled config file exists before removing it.
+if [ -f "$ENABLED_CONFIG" ]; then
+  rm "$ENABLED_CONFIG"
+fi
+
+#Check if the default config file exists before creating a symbolic link.
+if [ -e "$DEFAULT_CONFIG" ]; then
+  ln -s "$DEFAULT_CONFIG" "$ENABLED_CONFIG"
+fi
+
+#Restart the Nginx service.
+systemctl restart nginx
