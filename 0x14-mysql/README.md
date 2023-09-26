@@ -1,9 +1,9 @@
-##0x14. MySQL
+#0x14. MySQL
 DevOps
 SysAdmin
 MySQL
 
-##Tasks
+#Tasks
 0. Install MySQL
 mandatory
 First things first, let’s get MySQL installed on both your web-01 and web-02 servers.
